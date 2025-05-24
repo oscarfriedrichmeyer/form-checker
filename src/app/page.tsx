@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 
 export default function Home() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -14,7 +13,6 @@ export default function Home() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
       setLoading(true);
       setShowResult(false);
