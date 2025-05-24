@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState } from "react";
 import Image from "next/image";
 
@@ -36,6 +38,12 @@ export default function Home() {
       <h1 className="text-4xl font-extrabold mb-6 text-center font-mono text-black">
         Physique Checker
       </h1>
+      <p className="mb-8 text-center text-lg font-mono text-pink-700 max-w-xl">
+        Lade ein Foto deiner beeindruckenden Muckis hoch und erlebe, wie unsere
+        hochmoderne, absolut übertriebene KI mit mehr Rechenpower als ein Toaster
+        deine Form analysiert! Nach nur wenigen Sekunden bekommst du ein gnadenlos ehrliches Urteil. Bereit
+        für die Wahrheit? 🚀🤖
+      </p>
       <div className="bg-white rounded-3xl shadow-2xl border-2 border-gray-200 p-8 flex flex-col items-center w-full max-w-md">
         <button
           onClick={handleUploadClick}
