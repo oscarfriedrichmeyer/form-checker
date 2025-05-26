@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
 
 export default function Home() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -13,17 +12,21 @@ export default function Home() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setPreviewUrl(URL.createObjectURL(file));
-      setLoading(true);
-      setShowResult(false);
-      setExploded(false);
-      setTimeout(() => {
-        setExploded(true);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPreviewUrl(event.target?.result as string);
+        setLoading(true);
+        setShowResult(false);
+        setExploded(false);
         setTimeout(() => {
-          setLoading(false);
-          setShowResult(true);
-        }, 900); // explosion duration
-      }, 1200); // loading duration
+          setExploded(true);
+          setTimeout(() => {
+            setLoading(false);
+            setShowResult(true);
+          }, 900);
+        }, 1200);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -58,13 +61,11 @@ export default function Home() {
         />
         {previewUrl && (
           <div className="relative w-64 h-64 mt-4 flex items-center justify-center">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={previewUrl}
               alt="Preview"
-              fill
-              className={`object-contain rounded-2xl transition-all duration-700 ${
-                exploded ? "scale-0 blur-2xl opacity-0" : ""
-              }`}
+              className={`object-contain rounded-2xl w-full h-full transition-all duration-700 ${exploded ? "scale-0 blur-2xl opacity-0" : ""}`}
               style={{ zIndex: 1 }}
             />
             {loading && !exploded && (
@@ -85,7 +86,7 @@ export default function Home() {
         {showResult && (
           <div className="flex flex-col items-center mt-6">
             {previewUrl && (
-              <Image
+              <img
                 src={previewUrl}
                 alt="Preview"
                 width={220}
